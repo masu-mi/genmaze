@@ -66,8 +66,10 @@ func main() {
 		switch scheme {
 		case "http", "https":
 			endpoint, payload, err = doHTTP(scheme, host, timeout, debug)
+		case "grpc", "grpcs":
+			endpoint, payload, err = doGRPC(scheme, host, timeout, debug)
 		default:
-			fmt.Fprintf(os.Stderr, "invalid scheme: %q (valid schemes: http)\n", scheme)
+			fmt.Fprintf(os.Stderr, "invalid scheme: %q (valid schemes: grpc|http)\n", scheme)
 			os.Exit(1)
 		}
 	}
@@ -87,7 +89,7 @@ func main() {
 	}
 
 	if data != nil {
-		if v, ok := data.(*maze.GenResult); ok {
+		if v, ok := data.(*maze.GeneratedMaze); ok {
 			fmt.Println(*v.Field)
 			return
 		}

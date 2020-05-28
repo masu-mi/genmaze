@@ -11,6 +11,7 @@ import (
 	"bytes"
 	"context"
 	maze "genmaze/gen/maze"
+	mazeviews "genmaze/gen/maze/views"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -75,7 +76,13 @@ func DecodeGenResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody
 			if err != nil {
 				return nil, goahttp.ErrDecodingError("maze", "gen", err)
 			}
-			res := NewGenResultOK(&body)
+			p := NewGeneratedMazeViewOK(&body)
+			view := "default"
+			vres := &mazeviews.GeneratedMaze{Projected: p, View: view}
+			if err = mazeviews.ValidateGeneratedMaze(vres); err != nil {
+				return nil, goahttp.ErrValidationError("maze", "gen", err)
+			}
+			res := maze.NewGeneratedMaze(vres)
 			return res, nil
 		default:
 			body, _ := ioutil.ReadAll(resp.Body)
@@ -84,13 +91,13 @@ func DecodeGenResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody
 	}
 }
 
-// unmarshalPositionResponseBodyToMazePosition builds a value of type
-// *maze.Position from a value of type *PositionResponseBody.
-func unmarshalPositionResponseBodyToMazePosition(v *PositionResponseBody) *maze.Position {
+// unmarshalPositionResponseBodyToMazeviewsPositionView builds a value of type
+// *mazeviews.PositionView from a value of type *PositionResponseBody.
+func unmarshalPositionResponseBodyToMazeviewsPositionView(v *PositionResponseBody) *mazeviews.PositionView {
 	if v == nil {
 		return nil
 	}
-	res := &maze.Position{
+	res := &mazeviews.PositionView{
 		X: v.X,
 		Y: v.Y,
 	}

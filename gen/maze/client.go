@@ -26,11 +26,11 @@ func NewClient(gen goa.Endpoint) *Client {
 }
 
 // Gen calls the "gen" endpoint of the "maze" service.
-func (c *Client) Gen(ctx context.Context, p *GenPayload) (res *GenResult, err error) {
+func (c *Client) Gen(ctx context.Context, p *GenPayload) (res *GeneratedMaze, err error) {
 	var ires interface{}
 	ires, err = c.GenEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*GenResult), nil
+	return ires.(*GeneratedMaze), nil
 }

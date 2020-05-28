@@ -9,6 +9,7 @@ package client
 
 import (
 	maze "genmaze/gen/maze"
+	mazeviews "genmaze/gen/maze/views"
 )
 
 // GenRequestBody is the type of the "maze" service "gen" endpoint HTTP request
@@ -44,17 +45,17 @@ func NewGenRequestBody(p *maze.GenPayload) *GenRequestBody {
 	return body
 }
 
-// NewGenResultOK builds a "maze" service "gen" endpoint result from a HTTP
-// "OK" response.
-func NewGenResultOK(body *GenResponseBody) *maze.GenResult {
-	v := &maze.GenResult{
+// NewGeneratedMazeViewOK builds a "maze" service "gen" endpoint result from a
+// HTTP "OK" response.
+func NewGeneratedMazeViewOK(body *GenResponseBody) *mazeviews.GeneratedMazeView {
+	v := &mazeviews.GeneratedMazeView{
 		Field: body.Field,
 	}
 	if body.Start != nil {
-		v.Start = unmarshalPositionResponseBodyToMazePosition(body.Start)
+		v.Start = unmarshalPositionResponseBodyToMazeviewsPositionView(body.Start)
 	}
 	if body.Goal != nil {
-		v.Goal = unmarshalPositionResponseBodyToMazePosition(body.Goal)
+		v.Goal = unmarshalPositionResponseBodyToMazeviewsPositionView(body.Goal)
 	}
 
 	return v

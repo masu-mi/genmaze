@@ -10,15 +10,23 @@ var _ = API("maze", func() {
 	Server("maze", func() {
 		Host("localhost", func() {
 			URI("http://localhost:8000")
+			URI("grpc://localhost:8080")
 		})
 	})
 })
 
 var Position = Type("position", func() {
 	Description("0-indexed position")
-	Attribute("x", Int, func() {
+	Field(1, "x", Int)
+	Field(2, "y", Int)
+})
+
+var GeneratedMaze = ResultType("generated_maze", func() {
+	Attributes(func() {
+		Field(1, "field", String)
+		Field(2, "start", Position)
+		Field(3, "goal", Position)
 	})
-	Attribute("y", Int)
 })
 
 var _ = Service("maze", func() {
@@ -37,15 +45,13 @@ var _ = Service("maze", func() {
 			Required("x", "y")
 		})
 
-		Result(func() {
-			Attribute("field", String)
-			Attribute("start", Position)
-			Attribute("goal", Position)
-		})
+		Result(GeneratedMaze)
 
 		HTTP(func() {
 			POST("/gen/")
 			Response(StatusOK)
+		})
+		GRPC(func() {
 		})
 	})
 

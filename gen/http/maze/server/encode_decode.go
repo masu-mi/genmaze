@@ -9,7 +9,7 @@ package server
 
 import (
 	"context"
-	maze "genmaze/gen/maze"
+	mazeviews "genmaze/gen/maze/views"
 	"io"
 	"net/http"
 
@@ -21,9 +21,9 @@ import (
 // endpoint.
 func EncodeGenResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
-		res := v.(*maze.GenResult)
+		res := v.(*mazeviews.GeneratedMaze)
 		enc := encoder(ctx, w)
-		body := NewGenResponseBody(res)
+		body := NewGenResponseBody(res.Projected)
 		w.WriteHeader(http.StatusOK)
 		return enc.Encode(body)
 	}
@@ -54,9 +54,9 @@ func DecodeGenRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Dec
 	}
 }
 
-// marshalMazePositionToPositionResponseBody builds a value of type
-// *PositionResponseBody from a value of type *maze.Position.
-func marshalMazePositionToPositionResponseBody(v *maze.Position) *PositionResponseBody {
+// marshalMazeviewsPositionViewToPositionResponseBody builds a value of type
+// *PositionResponseBody from a value of type *mazeviews.PositionView.
+func marshalMazeviewsPositionViewToPositionResponseBody(v *mazeviews.PositionView) *PositionResponseBody {
 	if v == nil {
 		return nil
 	}

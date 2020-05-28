@@ -9,12 +9,13 @@ package maze
 
 import (
 	"context"
+	mazeviews "genmaze/gen/maze/views"
 )
 
 // The genmaze service performs operations on numbers.
 type Service interface {
 	// Gen implements gen.
-	Gen(context.Context, *GenPayload) (res *GenResult, err error)
+	Gen(context.Context, *GenPayload) (res *GeneratedMaze, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -35,8 +36,8 @@ type GenPayload struct {
 	Y int
 }
 
-// GenResult is the result type of the maze service gen method.
-type GenResult struct {
+// GeneratedMaze is the result type of the maze service gen method.
+type GeneratedMaze struct {
 	Field *string
 	Start *Position
 	Goal  *Position
@@ -46,4 +47,75 @@ type GenResult struct {
 type Position struct {
 	X *int
 	Y *int
+}
+
+// NewGeneratedMaze initializes result type GeneratedMaze from viewed result
+// type GeneratedMaze.
+func NewGeneratedMaze(vres *mazeviews.GeneratedMaze) *GeneratedMaze {
+	return newGeneratedMaze(vres.Projected)
+}
+
+// NewViewedGeneratedMaze initializes viewed result type GeneratedMaze from
+// result type GeneratedMaze using the given view.
+func NewViewedGeneratedMaze(res *GeneratedMaze, view string) *mazeviews.GeneratedMaze {
+	p := newGeneratedMazeView(res)
+	return &mazeviews.GeneratedMaze{Projected: p, View: "default"}
+}
+
+// newGeneratedMaze converts projected type GeneratedMaze to service type
+// GeneratedMaze.
+func newGeneratedMaze(vres *mazeviews.GeneratedMazeView) *GeneratedMaze {
+	res := &GeneratedMaze{
+		Field: vres.Field,
+	}
+	if vres.Start != nil {
+		res.Start = transformMazeviewsPositionViewToPosition(vres.Start)
+	}
+	if vres.Goal != nil {
+		res.Goal = transformMazeviewsPositionViewToPosition(vres.Goal)
+	}
+	return res
+}
+
+// newGeneratedMazeView projects result type GeneratedMaze to projected type
+// GeneratedMazeView using the "default" view.
+func newGeneratedMazeView(res *GeneratedMaze) *mazeviews.GeneratedMazeView {
+	vres := &mazeviews.GeneratedMazeView{
+		Field: res.Field,
+	}
+	if res.Start != nil {
+		vres.Start = transformPositionToMazeviewsPositionView(res.Start)
+	}
+	if res.Goal != nil {
+		vres.Goal = transformPositionToMazeviewsPositionView(res.Goal)
+	}
+	return vres
+}
+
+// transformMazeviewsPositionViewToPosition builds a value of type *Position
+// from a value of type *mazeviews.PositionView.
+func transformMazeviewsPositionViewToPosition(v *mazeviews.PositionView) *Position {
+	if v == nil {
+		return nil
+	}
+	res := &Position{
+		X: v.X,
+		Y: v.Y,
+	}
+
+	return res
+}
+
+// transformPositionToMazeviewsPositionView builds a value of type
+// *mazeviews.PositionView from a value of type *Position.
+func transformPositionToMazeviewsPositionView(v *Position) *mazeviews.PositionView {
+	if v == nil {
+		return nil
+	}
+	res := &mazeviews.PositionView{
+		X: v.X,
+		Y: v.Y,
+	}
+
+	return res
 }

@@ -19,11 +19,11 @@ func NewMaze(logger *log.Logger) maze.Service {
 }
 
 // Gen implements gen.
-func (s *mazesrvc) Gen(ctx context.Context, p *maze.GenPayload) (res *maze.GenResult, err error) {
+func (s *mazesrvc) Gen(ctx context.Context, p *maze.GenPayload) (res *maze.GeneratedMaze, err error) {
 	x, y := p.X, p.Y
 	m, _ := model.CreateMazeWithWallGrow(x, y)
-	res = &maze.GenResult{}
 	str := m.String()
+	res = &maze.GeneratedMaze{}
 	res.Field = &str
 	s.logger.Print("maze.gen")
 	return

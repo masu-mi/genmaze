@@ -35,6 +35,11 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 func NewGenEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*GenPayload)
-		return s.Gen(ctx, p)
+		res, err := s.Gen(ctx, p)
+		if err != nil {
+			return nil, err
+		}
+		vres := NewViewedGeneratedMaze(res, "default")
+		return vres, nil
 	}
 }

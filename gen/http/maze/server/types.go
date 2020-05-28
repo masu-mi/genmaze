@@ -9,6 +9,7 @@ package server
 
 import (
 	maze "genmaze/gen/maze"
+	mazeviews "genmaze/gen/maze/views"
 
 	goa "goa.design/goa/v3/pkg"
 )
@@ -38,15 +39,15 @@ type PositionResponseBody struct {
 
 // NewGenResponseBody builds the HTTP response body from the result of the
 // "gen" endpoint of the "maze" service.
-func NewGenResponseBody(res *maze.GenResult) *GenResponseBody {
+func NewGenResponseBody(res *mazeviews.GeneratedMazeView) *GenResponseBody {
 	body := &GenResponseBody{
 		Field: res.Field,
 	}
 	if res.Start != nil {
-		body.Start = marshalMazePositionToPositionResponseBody(res.Start)
+		body.Start = marshalMazeviewsPositionViewToPositionResponseBody(res.Start)
 	}
 	if res.Goal != nil {
-		body.Goal = marshalMazePositionToPositionResponseBody(res.Goal)
+		body.Goal = marshalMazeviewsPositionViewToPositionResponseBody(res.Goal)
 	}
 	return body
 }
