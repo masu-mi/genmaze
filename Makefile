@@ -15,7 +15,7 @@ export GO111MODULE=on
 .DEFAULT_GOAL := bin/$(NAME)
 
 bin/$(NAME): $(SRCS)
-	go build $(LDFLAGS) -o bin/$(NAME) $(TARGET)
+	CGO_ENABLED=0 go build $(LDFLAGS) -o bin/$(NAME) $(TARGET)
 
 .PHONY: ci-test
 ci-test:
@@ -29,7 +29,7 @@ clean:
 
 .PHONY: fast
 fast:
-	go build $(LDFLAGS) -o bin/$(NAME) $(TARGET)
+	CGO_ENABLED=0 go build $(LDFLAGS) -o bin/$(NAME) $(TARGET)
 
 .PHONY: cross-build
 cross-build:
@@ -45,7 +45,7 @@ DOCKER_REPOSITORY := docker.io
 ifeq ($(DOCKER_REPOSITORY),)
 DOCKER_IMAGE_NAME := masumi/maze
 else
-DOCKER_IMAGE_NAME := $(DOCKER_REPOSITORY)/maze
+DOCKER_IMAGE_NAME := $(DOCKER_REPOSITORY)/masumi/maze
 endif
 DOCKER_IMAGE_TAG  ?= latest
 DOCKER_IMAGE      := $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)

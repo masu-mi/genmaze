@@ -11,6 +11,8 @@ RUN make fast
 FROM alpine:3.11 AS release
 
 RUN apk add --no-cache --update ca-certificates
-COPY --from=build /work/bin/maze /maze
+COPY --from=build /work/bin/maze /bin/maze
+COPY gen/http/openapi.* /gen/http/
+COPY public/swagger-ui /public/swagger-ui
 
-ENTRYPOINT ["/maze"]
+ENTRYPOINT ["/bin/maze"]
