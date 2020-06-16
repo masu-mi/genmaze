@@ -1,0 +1,12 @@
+[[source]]
+name = "svgmaze"
+url = ""
+verify_ssl = true
+
+[dev-packages]
+grpcio-tools = "*"
+
+[packages]
+
+[requires]
+python_version = "3.8"
