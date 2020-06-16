@@ -15,9 +15,7 @@ class SimpleServiceServicer(maze_pb2_grpc.MazeServicer):
     # 受信時の処理
     def Gen(self, request, context):
         print("req: {}".format(request))
-        return maze_pb2.GenResponse(field='''###
-# #
-###''')
+        return maze_pb2.GenResponse(field='###\n# #\n###')
 
 url = '[::]:50051'
 # サーバーの開始
