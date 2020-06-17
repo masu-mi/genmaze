@@ -19,18 +19,11 @@ service Maze {
 
 message GenRequest {
 	// field size x
-	sint32 x = 1;
+	sint32 w = 1;
 	// field size y
-	sint32 y = 2;
+	sint32 h = 2;
 }
 
 message GenResponse {
 	string field = 1;
-	Position start = 2;
-	Position goal = 3;
-}
-// 0-indexed position
-message Position {
-	sint32 x = 1;
-	sint32 y = 2;
 }

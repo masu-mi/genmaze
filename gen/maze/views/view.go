@@ -22,14 +22,6 @@ type GeneratedMaze struct {
 // GeneratedMazeView is a type that runs validations on a projected type.
 type GeneratedMazeView struct {
 	Field *string
-	Start *PositionView
-	Goal  *PositionView
-}
-
-// PositionView is a type that runs validations on a projected type.
-type PositionView struct {
-	X *int
-	Y *int
 }
 
 var (
@@ -38,8 +30,6 @@ var (
 	GeneratedMazeMap = map[string][]string{
 		"default": []string{
 			"field",
-			"start",
-			"goal",
 		},
 	}
 )
@@ -59,12 +49,6 @@ func ValidateGeneratedMaze(result *GeneratedMaze) (err error) {
 // ValidateGeneratedMazeView runs the validations defined on GeneratedMazeView
 // using the "default" view.
 func ValidateGeneratedMazeView(result *GeneratedMazeView) (err error) {
-
-	return
-}
-
-// ValidatePositionView runs the validations defined on PositionView.
-func ValidatePositionView(result *PositionView) (err error) {
 
 	return
 }

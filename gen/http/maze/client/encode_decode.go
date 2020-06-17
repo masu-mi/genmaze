@@ -90,17 +90,3 @@ func DecodeGenResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody
 		}
 	}
 }
-
-// unmarshalPositionResponseBodyToMazeviewsPositionView builds a value of type
-// *mazeviews.PositionView from a value of type *PositionResponseBody.
-func unmarshalPositionResponseBodyToMazeviewsPositionView(v *PositionResponseBody) *mazeviews.PositionView {
-	if v == nil {
-		return nil
-	}
-	res := &mazeviews.PositionView{
-		X: v.X,
-		Y: v.Y,
-	}
-
-	return res
-}

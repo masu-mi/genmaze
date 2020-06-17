@@ -22,27 +22,27 @@ func BuildGenPayload(mazeGenBody string) (*maze.GenPayload, error) {
 	{
 		err = json.Unmarshal([]byte(mazeGenBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"x\": 735,\n      \"y\": 237\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"h\": 853,\n      \"w\": 273\n   }'")
 		}
-		if body.X < 1 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.x", body.X, 1, true))
+		if body.W < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.w", body.W, 1, true))
 		}
-		if body.X > 1001 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.x", body.X, 1001, false))
+		if body.W > 1001 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.w", body.W, 1001, false))
 		}
-		if body.Y < 1 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.y", body.Y, 1, true))
+		if body.H < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.h", body.H, 1, true))
 		}
-		if body.Y > 1001 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.y", body.Y, 1001, false))
+		if body.H > 1001 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.h", body.H, 1001, false))
 		}
 		if err != nil {
 			return nil, err
 		}
 	}
 	v := &maze.GenPayload{
-		X: body.X,
-		Y: body.Y,
+		W: body.W,
+		H: body.H,
 	}
 
 	return v, nil

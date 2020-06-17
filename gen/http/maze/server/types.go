@@ -18,23 +18,15 @@ import (
 // body.
 type GenRequestBody struct {
 	// field size x
-	X *int `form:"x,omitempty" json:"x,omitempty" xml:"x,omitempty"`
+	W *int `form:"w,omitempty" json:"w,omitempty" xml:"w,omitempty"`
 	// field size y
-	Y *int `form:"y,omitempty" json:"y,omitempty" xml:"y,omitempty"`
+	H *int `form:"h,omitempty" json:"h,omitempty" xml:"h,omitempty"`
 }
 
 // GenResponseBody is the type of the "maze" service "gen" endpoint HTTP
 // response body.
 type GenResponseBody struct {
-	Field *string               `form:"field,omitempty" json:"field,omitempty" xml:"field,omitempty"`
-	Start *PositionResponseBody `form:"start,omitempty" json:"start,omitempty" xml:"start,omitempty"`
-	Goal  *PositionResponseBody `form:"goal,omitempty" json:"goal,omitempty" xml:"goal,omitempty"`
-}
-
-// PositionResponseBody is used to define fields on response body types.
-type PositionResponseBody struct {
-	X *int `form:"x,omitempty" json:"x,omitempty" xml:"x,omitempty"`
-	Y *int `form:"y,omitempty" json:"y,omitempty" xml:"y,omitempty"`
+	Field *string `form:"field,omitempty" json:"field,omitempty" xml:"field,omitempty"`
 }
 
 // NewGenResponseBody builds the HTTP response body from the result of the
@@ -43,20 +35,14 @@ func NewGenResponseBody(res *mazeviews.GeneratedMazeView) *GenResponseBody {
 	body := &GenResponseBody{
 		Field: res.Field,
 	}
-	if res.Start != nil {
-		body.Start = marshalMazeviewsPositionViewToPositionResponseBody(res.Start)
-	}
-	if res.Goal != nil {
-		body.Goal = marshalMazeviewsPositionViewToPositionResponseBody(res.Goal)
-	}
 	return body
 }
 
 // NewGenPayload builds a maze service gen endpoint payload.
 func NewGenPayload(body *GenRequestBody) *maze.GenPayload {
 	v := &maze.GenPayload{
-		X: *body.X,
-		Y: *body.Y,
+		W: *body.W,
+		H: *body.H,
 	}
 
 	return v
@@ -64,30 +50,30 @@ func NewGenPayload(body *GenRequestBody) *maze.GenPayload {
 
 // ValidateGenRequestBody runs the validations defined on GenRequestBody
 func ValidateGenRequestBody(body *GenRequestBody) (err error) {
-	if body.X == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("x", "body"))
+	if body.W == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("w", "body"))
 	}
-	if body.Y == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("y", "body"))
+	if body.H == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("h", "body"))
 	}
-	if body.X != nil {
-		if *body.X < 1 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.x", *body.X, 1, true))
+	if body.W != nil {
+		if *body.W < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.w", *body.W, 1, true))
 		}
 	}
-	if body.X != nil {
-		if *body.X > 1001 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.x", *body.X, 1001, false))
+	if body.W != nil {
+		if *body.W > 1001 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.w", *body.W, 1001, false))
 		}
 	}
-	if body.Y != nil {
-		if *body.Y < 1 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.y", *body.Y, 1, true))
+	if body.H != nil {
+		if *body.H < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.h", *body.H, 1, true))
 		}
 	}
-	if body.Y != nil {
-		if *body.Y > 1001 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError("body.y", *body.Y, 1001, false))
+	if body.H != nil {
+		if *body.H > 1001 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.h", *body.H, 1001, false))
 		}
 	}
 	return

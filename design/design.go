@@ -15,17 +15,9 @@ var _ = API("maze", func() {
 	})
 })
 
-var Position = Type("position", func() {
-	Description("0-indexed position")
-	Field(1, "x", Int)
-	Field(2, "y", Int)
-})
-
 var GeneratedMaze = ResultType("generated_maze", func() {
 	Attributes(func() {
 		Field(1, "field", String)
-		Field(2, "start", Position)
-		Field(3, "goal", Position)
 	})
 })
 
@@ -34,15 +26,15 @@ var _ = Service("maze", func() {
 
 	Method("gen", func() {
 		Payload(func() {
-			Field(1, "x", Int, "field size x", func() {
+			Field(1, "w", Int, "field size x", func() {
 				Minimum(1)
 				Maximum(1001)
 			})
-			Field(2, "y", Int, "field size y", func() {
+			Field(2, "h", Int, "field size y", func() {
 				Minimum(1)
 				Maximum(1001)
 			})
-			Required("x", "y")
+			Required("w", "h")
 		})
 
 		Result(GeneratedMaze)

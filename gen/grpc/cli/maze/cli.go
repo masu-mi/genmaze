@@ -29,8 +29,8 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` maze gen --message '{
-      "x": 884,
-      "y": 742
+      "h": 4,
+      "w": 151
    }'` + "\n" +
 		""
 }
@@ -143,8 +143,8 @@ Gen implements gen.
 
 Example:
     `+os.Args[0]+` maze gen --message '{
-      "x": 884,
-      "y": 742
+      "h": 4,
+      "w": 151
    }'
 `, os.Args[0])
 }

@@ -31,22 +31,14 @@ var MethodNames = [1]string{"gen"}
 // GenPayload is the payload type of the maze service gen method.
 type GenPayload struct {
 	// field size x
-	X int
+	W int
 	// field size y
-	Y int
+	H int
 }
 
 // GeneratedMaze is the result type of the maze service gen method.
 type GeneratedMaze struct {
 	Field *string
-	Start *Position
-	Goal  *Position
-}
-
-// 0-indexed position
-type Position struct {
-	X *int
-	Y *int
 }
 
 // NewGeneratedMaze initializes result type GeneratedMaze from viewed result
@@ -68,12 +60,6 @@ func newGeneratedMaze(vres *mazeviews.GeneratedMazeView) *GeneratedMaze {
 	res := &GeneratedMaze{
 		Field: vres.Field,
 	}
-	if vres.Start != nil {
-		res.Start = transformMazeviewsPositionViewToPosition(vres.Start)
-	}
-	if vres.Goal != nil {
-		res.Goal = transformMazeviewsPositionViewToPosition(vres.Goal)
-	}
 	return res
 }
 
@@ -83,39 +69,5 @@ func newGeneratedMazeView(res *GeneratedMaze) *mazeviews.GeneratedMazeView {
 	vres := &mazeviews.GeneratedMazeView{
 		Field: res.Field,
 	}
-	if res.Start != nil {
-		vres.Start = transformPositionToMazeviewsPositionView(res.Start)
-	}
-	if res.Goal != nil {
-		vres.Goal = transformPositionToMazeviewsPositionView(res.Goal)
-	}
 	return vres
-}
-
-// transformMazeviewsPositionViewToPosition builds a value of type *Position
-// from a value of type *mazeviews.PositionView.
-func transformMazeviewsPositionViewToPosition(v *mazeviews.PositionView) *Position {
-	if v == nil {
-		return nil
-	}
-	res := &Position{
-		X: v.X,
-		Y: v.Y,
-	}
-
-	return res
-}
-
-// transformPositionToMazeviewsPositionView builds a value of type
-// *mazeviews.PositionView from a value of type *Position.
-func transformPositionToMazeviewsPositionView(v *Position) *mazeviews.PositionView {
-	if v == nil {
-		return nil
-	}
-	res := &mazeviews.PositionView{
-		X: v.X,
-		Y: v.Y,
-	}
-
-	return res
 }

@@ -19,8 +19,8 @@ import (
 // from the gRPC request type.
 func NewGenPayload(message *mazepb.GenRequest) *maze.GenPayload {
 	v := &maze.GenPayload{
-		X: int(message.X),
-		Y: int(message.Y),
+		W: int(message.W),
+		H: int(message.H),
 	}
 	return v
 }
@@ -32,64 +32,22 @@ func NewGenResponse(result *mazeviews.GeneratedMazeView) *mazepb.GenResponse {
 	if result.Field != nil {
 		message.Field = *result.Field
 	}
-	if result.Start != nil {
-		message.Start = svcMazeviewsPositionViewToMazepbPosition(result.Start)
-	}
-	if result.Goal != nil {
-		message.Goal = svcMazeviewsPositionViewToMazepbPosition(result.Goal)
-	}
 	return message
 }
 
 // ValidateGenRequest runs the validations defined on GenRequest.
 func ValidateGenRequest(message *mazepb.GenRequest) (err error) {
-	if message.X < 1 {
-		err = goa.MergeErrors(err, goa.InvalidRangeError("message.x", message.X, 1, true))
+	if message.W < 1 {
+		err = goa.MergeErrors(err, goa.InvalidRangeError("message.w", message.W, 1, true))
 	}
-	if message.X > 1001 {
-		err = goa.MergeErrors(err, goa.InvalidRangeError("message.x", message.X, 1001, false))
+	if message.W > 1001 {
+		err = goa.MergeErrors(err, goa.InvalidRangeError("message.w", message.W, 1001, false))
 	}
-	if message.Y < 1 {
-		err = goa.MergeErrors(err, goa.InvalidRangeError("message.y", message.Y, 1, true))
+	if message.H < 1 {
+		err = goa.MergeErrors(err, goa.InvalidRangeError("message.h", message.H, 1, true))
 	}
-	if message.Y > 1001 {
-		err = goa.MergeErrors(err, goa.InvalidRangeError("message.y", message.Y, 1001, false))
+	if message.H > 1001 {
+		err = goa.MergeErrors(err, goa.InvalidRangeError("message.h", message.H, 1001, false))
 	}
 	return
-}
-
-// svcMazeviewsPositionViewToMazepbPosition builds a value of type
-// *mazepb.Position from a value of type *mazeviews.PositionView.
-func svcMazeviewsPositionViewToMazepbPosition(v *mazeviews.PositionView) *mazepb.Position {
-	if v == nil {
-		return nil
-	}
-	res := &mazepb.Position{}
-	if v.X != nil {
-		res.X = int32(*v.X)
-	}
-	if v.Y != nil {
-		res.Y = int32(*v.Y)
-	}
-
-	return res
-}
-
-// protobufMazepbPositionToMazeviewsPositionView builds a value of type
-// *mazeviews.PositionView from a value of type *mazepb.Position.
-func protobufMazepbPositionToMazeviewsPositionView(v *mazepb.Position) *mazeviews.PositionView {
-	if v == nil {
-		return nil
-	}
-	res := &mazeviews.PositionView{}
-	if v.X != 0 {
-		xptr := int(v.X)
-		res.X = &xptr
-	}
-	if v.Y != 0 {
-		yptr := int(v.Y)
-		res.Y = &yptr
-	}
-
-	return res
 }

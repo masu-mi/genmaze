@@ -17,8 +17,8 @@ import (
 // endpoint of the "maze" service.
 func NewGenRequest(payload *maze.GenPayload) *mazepb.GenRequest {
 	message := &mazepb.GenRequest{
-		X: int32(payload.X),
-		Y: int32(payload.Y),
+		W: int32(payload.W),
+		H: int32(payload.H),
 	}
 	return message
 }
@@ -30,47 +30,5 @@ func NewGenResult(message *mazepb.GenResponse) *mazeviews.GeneratedMazeView {
 	if message.Field != "" {
 		result.Field = &message.Field
 	}
-	if message.Start != nil {
-		result.Start = protobufMazepbPositionToMazeviewsPositionView(message.Start)
-	}
-	if message.Goal != nil {
-		result.Goal = protobufMazepbPositionToMazeviewsPositionView(message.Goal)
-	}
 	return result
-}
-
-// svcMazeviewsPositionViewToMazepbPosition builds a value of type
-// *mazepb.Position from a value of type *mazeviews.PositionView.
-func svcMazeviewsPositionViewToMazepbPosition(v *mazeviews.PositionView) *mazepb.Position {
-	if v == nil {
-		return nil
-	}
-	res := &mazepb.Position{}
-	if v.X != nil {
-		res.X = int32(*v.X)
-	}
-	if v.Y != nil {
-		res.Y = int32(*v.Y)
-	}
-
-	return res
-}
-
-// protobufMazepbPositionToMazeviewsPositionView builds a value of type
-// *mazeviews.PositionView from a value of type *mazepb.Position.
-func protobufMazepbPositionToMazeviewsPositionView(v *mazepb.Position) *mazeviews.PositionView {
-	if v == nil {
-		return nil
-	}
-	res := &mazeviews.PositionView{}
-	if v.X != 0 {
-		xptr := int(v.X)
-		res.X = &xptr
-	}
-	if v.Y != 0 {
-		yptr := int(v.Y)
-		res.Y = &yptr
-	}
-
-	return res
 }

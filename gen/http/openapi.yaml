@@ -26,8 +26,8 @@ paths:
         schema:
           $ref: '#/definitions/MazeGenRequestBody'
           required:
-          - x
-          - "y"
+          - w
+          - h
       responses:
         "200":
           description: OK response.
@@ -92,7 +92,7 @@ definitions:
       fault:
         type: boolean
         description: Is the error a server-side fault?
-        example: true
+        example: false
       id:
         type: string
         description: ID is a unique identifier for this particular occurrence of the problem.
@@ -115,11 +115,11 @@ definitions:
         example: true
     description: Error response result type (default view)
     example:
-      fault: false
+      fault: true
       id: 123abc
       message: parameter 'p' must be an integer
       name: bad_request
-      temporary: false
+      temporary: true
       timeout: false
     required:
     - name
@@ -132,57 +132,31 @@ definitions:
     title: MazeGenRequestBody
     type: object
     properties:
-      x:
-        type: integer
-        description: field size x
-        example: 60
-        minimum: 1
-        maximum: 1001
-      "y":
+      h:
         type: integer
         description: field size y
-        example: 643
+        example: 831
+        minimum: 1
+        maximum: 1001
+      w:
+        type: integer
+        description: field size x
+        example: 908
         minimum: 1
         maximum: 1001
     example:
-      x: 484
-      "y": 923
+      h: 933
+      w: 898
     required:
-    - x
-    - "y"
+    - w
+    - h
   MazeGenResponseBody:
     title: 'Mediatype identifier: generated_maze; view=default'
     type: object
     properties:
       field:
         type: string
-        example: Aut alias illo quo quam neque.
-      goal:
-        $ref: '#/definitions/positionResponseBody'
-      start:
-        $ref: '#/definitions/positionResponseBody'
+        example: Aut voluptatibus.
     description: GenResponseBody result type (default view)
     example:
-      field: Ipsam voluptas et quas ullam.
-      goal:
-        x: 7048838751949683453
-        "y": 2965431439703537929
-      start:
-        x: 7048838751949683453
-        "y": 2965431439703537929
-  positionResponseBody:
-    title: positionResponseBody
-    type: object
-    properties:
-      x:
-        type: integer
-        example: 6581486453591787830
-        format: int64
-      "y":
-        type: integer
-        example: 7778753210508754897
-        format: int64
-    description: 0-indexed position
-    example:
-      x: 2291225199197669932
-      "y": 329008854803883618
+      field: Libero aut alias illo quo quam.

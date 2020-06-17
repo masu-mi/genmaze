@@ -22,13 +22,13 @@ func BuildGenPayload(mazeGenMessage string) (*maze.GenPayload, error) {
 		if mazeGenMessage != "" {
 			err = json.Unmarshal([]byte(mazeGenMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, example of valid JSON:\n%s", "'{\n      \"x\": 884,\n      \"y\": 742\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, example of valid JSON:\n%s", "'{\n      \"h\": 4,\n      \"w\": 151\n   }'")
 			}
 		}
 	}
 	v := &maze.GenPayload{
-		X: int(message.X),
-		Y: int(message.Y),
+		W: int(message.W),
+		H: int(message.H),
 	}
 
 	return v, nil

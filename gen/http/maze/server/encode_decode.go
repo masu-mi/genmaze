@@ -53,17 +53,3 @@ func DecodeGenRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Dec
 		return payload, nil
 	}
 }
-
-// marshalMazeviewsPositionViewToPositionResponseBody builds a value of type
-// *PositionResponseBody from a value of type *mazeviews.PositionView.
-func marshalMazeviewsPositionViewToPositionResponseBody(v *mazeviews.PositionView) *PositionResponseBody {
-	if v == nil {
-		return nil
-	}
-	res := &PositionResponseBody{
-		X: v.X,
-		Y: v.Y,
-	}
-
-	return res
-}

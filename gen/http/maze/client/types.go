@@ -16,31 +16,23 @@ import (
 // body.
 type GenRequestBody struct {
 	// field size x
-	X int `form:"x" json:"x" xml:"x"`
+	W int `form:"w" json:"w" xml:"w"`
 	// field size y
-	Y int `form:"y" json:"y" xml:"y"`
+	H int `form:"h" json:"h" xml:"h"`
 }
 
 // GenResponseBody is the type of the "maze" service "gen" endpoint HTTP
 // response body.
 type GenResponseBody struct {
-	Field *string               `form:"field,omitempty" json:"field,omitempty" xml:"field,omitempty"`
-	Start *PositionResponseBody `form:"start,omitempty" json:"start,omitempty" xml:"start,omitempty"`
-	Goal  *PositionResponseBody `form:"goal,omitempty" json:"goal,omitempty" xml:"goal,omitempty"`
-}
-
-// PositionResponseBody is used to define fields on response body types.
-type PositionResponseBody struct {
-	X *int `form:"x,omitempty" json:"x,omitempty" xml:"x,omitempty"`
-	Y *int `form:"y,omitempty" json:"y,omitempty" xml:"y,omitempty"`
+	Field *string `form:"field,omitempty" json:"field,omitempty" xml:"field,omitempty"`
 }
 
 // NewGenRequestBody builds the HTTP request body from the payload of the "gen"
 // endpoint of the "maze" service.
 func NewGenRequestBody(p *maze.GenPayload) *GenRequestBody {
 	body := &GenRequestBody{
-		X: p.X,
-		Y: p.Y,
+		W: p.W,
+		H: p.H,
 	}
 	return body
 }
@@ -50,12 +42,6 @@ func NewGenRequestBody(p *maze.GenPayload) *GenRequestBody {
 func NewGeneratedMazeViewOK(body *GenResponseBody) *mazeviews.GeneratedMazeView {
 	v := &mazeviews.GeneratedMazeView{
 		Field: body.Field,
-	}
-	if body.Start != nil {
-		v.Start = unmarshalPositionResponseBodyToMazeviewsPositionView(body.Start)
-	}
-	if body.Goal != nil {
-		v.Goal = unmarshalPositionResponseBodyToMazeviewsPositionView(body.Goal)
 	}
 
 	return v
