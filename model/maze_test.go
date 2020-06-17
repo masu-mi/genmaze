@@ -5,9 +5,11 @@ import (
 )
 
 func TestMazeString(t *testing.T) {
-	m, _ := NewMaze(1, 1)
+	m, _ := NewMaze(1, 3)
 	got := m.String()
 	want := `###
+# #
+# #
 # #
 ###
 `

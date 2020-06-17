@@ -18,17 +18,17 @@ func NewMaze(x, y int) (*Maze, error) {
 	}
 	m := &Maze{
 		x: x, y: y,
-		filed: make([][]byte, x+2),
+		filed: make([][]byte, y+2),
 	}
-	m.filed[0] = wallLine(y + 2)
-	m.filed[x+1] = wallLine(y + 2)
-	for i := 1; i < x+1; i++ {
-		m.filed[i] = make([]byte, y+2)
+	m.filed[0] = wallLine(x + 2)
+	m.filed[y+1] = wallLine(x + 2)
+	for i := 1; i < y+1; i++ {
+		m.filed[i] = make([]byte, x+2)
 		m.filed[i][0] = wall
-		for j := 1; j < y+1; j++ {
+		for j := 1; j < x+1; j++ {
 			m.filed[i][j] = space
 		}
-		m.filed[i][y+1] = wall
+		m.filed[i][x+1] = wall
 	}
 	return m, nil
 }

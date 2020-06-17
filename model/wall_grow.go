@@ -44,16 +44,16 @@ func CreateMazeWithWallGrow(x, y int) (m *Maze, err error) {
 		)
 		adding := set{}
 		for l < maxLength && !last {
-			m.filed[n.x][n.y] = wall
+			m.filed[n.y][n.x] = wall
 			delete(candidates, n)
 			adding[n] = mark
 
 			next := selectNextPos(n, adding)
-			if m.filed[next.x][next.y] == wall {
+			if m.filed[next.y][next.x] == wall {
 				last = true
 			}
 			mid := middle(n, next)
-			m.filed[mid.x][mid.y] = wall
+			m.filed[mid.y][mid.x] = wall
 			n = next
 		}
 	}
