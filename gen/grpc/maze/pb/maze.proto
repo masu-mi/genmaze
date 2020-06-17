@@ -1,0 +1,36 @@
+// Code generated with goa v3.1.3, DO NOT EDIT.
+//
+// maze protocol buffer definition
+//
+// Command:
+// $ goa gen genmaze/design
+
+syntax = "proto3";
+
+package maze;
+
+option go_package = "mazepb";
+
+// The genmaze service performs operations on numbers.
+service Maze {
+	// Gen implements gen.
+	rpc Gen (GenRequest) returns (GenResponse);
+}
+
+message GenRequest {
+	// field size x
+	sint32 x = 1;
+	// field size y
+	sint32 y = 2;
+}
+
+message GenResponse {
+	string field = 1;
+	Position start = 2;
+	Position goal = 3;
+}
+// 0-indexed position
+message Position {
+	sint32 x = 1;
+	sint32 y = 2;
+}
