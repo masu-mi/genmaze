@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='maze',
   syntax='proto3',
   serialized_options=b'Z\006mazepb',
-  serialized_pb=b'\n\nmaze.proto\x12\x04maze\"\"\n\nGenRequest\x12\t\n\x01x\x18\x01 \x01(\x11\x12\t\n\x01y\x18\x02 \x01(\x11\"Y\n\x0bGenResponse\x12\r\n\x05\x66ield\x18\x01 \x01(\t\x12\x1d\n\x05start\x18\x02 \x01(\x0b\x32\x0e.maze.Position\x12\x1c\n\x04goal\x18\x03 \x01(\x0b\x32\x0e.maze.Position\" \n\x08Position\x12\t\n\x01x\x18\x01 \x01(\x11\x12\t\n\x01y\x18\x02 \x01(\x11\x32\x32\n\x04Maze\x12*\n\x03Gen\x12\x10.maze.GenRequest\x1a\x11.maze.GenResponseB\x08Z\x06mazepbb\x06proto3'
+  serialized_pb=b'\n\nmaze.proto\x12\x04maze\"\"\n\nGenRequest\x12\t\n\x01w\x18\x01 \x01(\x11\x12\t\n\x01h\x18\x02 \x01(\x11\"\x1c\n\x0bGenResponse\x12\r\n\x05\x66ield\x18\x01 \x01(\t22\n\x04Maze\x12*\n\x03Gen\x12\x10.maze.GenRequest\x1a\x11.maze.GenResponseB\x08Z\x06mazepbb\x06proto3'
 )
 
 
@@ -32,14 +32,14 @@ _GENREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='maze.GenRequest.x', index=0,
+      name='w', full_name='maze.GenRequest.w', index=0,
       number=1, type=17, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='maze.GenRequest.y', index=1,
+      name='h', full_name='maze.GenRequest.h', index=1,
       number=2, type=17, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -76,20 +76,6 @@ _GENRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='start', full_name='maze.GenResponse.start', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='goal', full_name='maze.GenResponse.goal', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -103,52 +89,11 @@ _GENRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=56,
-  serialized_end=145,
+  serialized_end=84,
 )
 
-
-_POSITION = _descriptor.Descriptor(
-  name='Position',
-  full_name='maze.Position',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='x', full_name='maze.Position.x', index=0,
-      number=1, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='y', full_name='maze.Position.y', index=1,
-      number=2, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=147,
-  serialized_end=179,
-)
-
-_GENRESPONSE.fields_by_name['start'].message_type = _POSITION
-_GENRESPONSE.fields_by_name['goal'].message_type = _POSITION
 DESCRIPTOR.message_types_by_name['GenRequest'] = _GENREQUEST
 DESCRIPTOR.message_types_by_name['GenResponse'] = _GENRESPONSE
-DESCRIPTOR.message_types_by_name['Position'] = _POSITION
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 GenRequest = _reflection.GeneratedProtocolMessageType('GenRequest', (_message.Message,), {
@@ -165,13 +110,6 @@ GenResponse = _reflection.GeneratedProtocolMessageType('GenResponse', (_message.
   })
 _sym_db.RegisterMessage(GenResponse)
 
-Position = _reflection.GeneratedProtocolMessageType('Position', (_message.Message,), {
-  'DESCRIPTOR' : _POSITION,
-  '__module__' : 'maze_pb2'
-  # @@protoc_insertion_point(class_scope:maze.Position)
-  })
-_sym_db.RegisterMessage(Position)
-
 
 DESCRIPTOR._options = None
 
@@ -181,8 +119,8 @@ _MAZE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=181,
-  serialized_end=231,
+  serialized_start=86,
+  serialized_end=136,
   methods=[
   _descriptor.MethodDescriptor(
     name='Gen',

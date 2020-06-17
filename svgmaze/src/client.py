@@ -13,7 +13,7 @@ def main():
     print("URL:{}".format(url))
     with grpc.insecure_channel(url) as channel:
         stub = maze_pb2_grpc.MazeStub(channel)
-        response = stub.Gen(maze_pb2.GenRequest(x=97, y=45))
+        response = stub.Gen(maze_pb2.GenRequest(w=97, h=45))
         print(response.field)
         m = Maze(response.field)
         m.renderMaze('maze.svg')
